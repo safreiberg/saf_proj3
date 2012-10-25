@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: comment_votes
+#
+#  id         :integer          not null, primary key
+#  comment_id :integer
+#  user_id    :integer
+#  up         :boolean
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:

@@ -1,4 +1,10 @@
 SafProj3::Application.routes.draw do
+  get "user/new"
+
+  get "user/show"
+
+  get "user/edit"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
