@@ -19,4 +19,3 @@ var update = function() {
 //      
 //    }
 //  });
-setInterval( update, 8000 );
