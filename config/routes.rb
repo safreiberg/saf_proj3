@@ -11,6 +11,9 @@ SafProj3::Application.routes.draw do
   get "/posts/add_comment" => 'posts#add_comment'
   post "/posts/add_comment" => 'posts#add_comment'
   
+  get "/posts/add_post" => 'posts#add_post'
+  post "/posts/add_post" => 'posts#add_post'
+  
   get "/posts/update_comments" => "posts#update_comments"
   post "/posts/update_comments" => "posts#update_comments"
   get "/posts/update_comments/:id" => "posts#update_comments"
@@ -39,8 +42,8 @@ SafProj3::Application.routes.draw do
   
   resources :user
   
-  get '/' => 'welcome#hello'
-  post '/' => 'welcome#hello'
+  get '/' => 'posts#index'
+  post '/' => 'posts#index'
   
   get '/welcome/oops' => 'welcome#oops'
   post 'welcome/oops' => 'welcome#oops'
@@ -54,6 +57,6 @@ SafProj3::Application.routes.draw do
   get '/user/edit' => 'user#edit'
   post '/user/edit' => 'user#edit'
     
-  root :to => 'welcome#hello'
+  root :to => 'posts#index'
   match '*path' => 'welcome#oops'
 end

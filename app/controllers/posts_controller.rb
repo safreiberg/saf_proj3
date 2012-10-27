@@ -35,6 +35,19 @@ class PostsController < ApplicationController
     redirect_to "/posts/show/" + params[:post_id].to_s
   end
   
+  def add_post
+    ## Prevent commenting in someone else's name
+    if session[:user_id].to_i == params[:user_id].to_i
+      post = Post.new(:user_id => params[:user_id], :content => params[:content], :title => params[:title])
+      if post.save
+        flash[:notice] = "Successfully added post."
+      else
+        flash[:notice] = "Oops! Something went wrong."
+      end
+    end
+    redirect_to "/posts/index/"
+  end
+  
   def update 
     logger.debug("updated");
     @posts = Post.limit(10)
