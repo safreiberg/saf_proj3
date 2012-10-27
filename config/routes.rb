@@ -1,4 +1,10 @@
 SafProj3::Application.routes.draw do
+  get "posts/show" => "posts#show"
+  get "posts/edit" => "posts#edit"
+  get "posts/index" => "posts#index"
+  get "posts/create" => "posts#index"
+  get "posts/new" => "posts#index"
+
   get '/session/new' => 'session#new'
   post '/session/new' => 'session#new'
   

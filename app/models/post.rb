@@ -7,8 +7,9 @@
 #  content    :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  title      :string(255)
 #
 
 class Post < ActiveRecord::Base
-  attr_accessible :content, :user_id
+  attr_accessible :content, :user_id, :title
 end

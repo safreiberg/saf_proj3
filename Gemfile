@@ -38,6 +38,9 @@ gem 'annotate'
 # To use db:push
 gem 'taps'
 
+gem 'bootstrap-sass'
+
+
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
