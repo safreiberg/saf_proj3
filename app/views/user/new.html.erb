@@ -1,2 +1,21 @@
-<h1>User#new</h1>
-<p>Find me in app/views/user/new.html.erb</p>
+<%= form_for @user, :url => { :action => "create" } do |f| %>
+<div class="field">
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+</div>
+<div class="field">
+  <%= f.label :username %>
+  <%= f.text_field :username %>
+</div>
+<div class="field">
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+<div>
+<div class="field">
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
+<div>
+<div class="actions">
+  <%= f.submit %>
+<div>
+<% end %>
