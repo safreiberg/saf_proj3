@@ -7,6 +7,14 @@ SafProj3::Application.routes.draw do
   get "/posts/new" => "posts#new"
   get "/posts/update" => "posts#update"
   post "/posts/update" => "posts#update"
+  
+  get "/posts/add_comment" => 'posts#add_comment'
+  post "/posts/add_comment" => 'posts#add_comment'
+  
+  get "/posts/update_comments" => "posts#update_comments"
+  post "/posts/update_comments" => "posts#update_comments"
+  get "/posts/update_comments/:id" => "posts#update_comments"
+  post "/posts/update_comments/:id" => "posts#update_comments"
 
   get '/session/new' => 'session#new'
   post '/session/new' => 'session#new'

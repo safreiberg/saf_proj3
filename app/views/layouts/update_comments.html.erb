@@ -1,0 +1,12 @@
+<tr>
+  <th>User</th>
+  <th>Content</th>
+  <th>Date</th>
+</tr>
+<% @comments.each do |comment| %>
+<tr>
+  <td><%= User.find_by_id(comment.user_id).username %></td>
+  <td><%= comment.content %></td>
+  <td><%= comment.created_at %></td>
+</tr>
+<% end %>

@@ -1,3 +1,21 @@
 <h1><%= @post.title %></h1>
 
 <h2><%= @post.content %></h2>
+
+<h3>Comments</h3>
+
+<%= form_tag('/posts/add_comment') do %>
+  <%= label_tag(:content, "Comment:") %>
+  <%= text_area_tag(:content) %>
+  <%= hidden_field_tag 'user_id', session[:user_id] %>
+  <%= hidden_field_tag 'post_id', params[:id] %> <br />
+  <%= submit_tag("Submit") %>
+<% end %>
+
+<table id="commentstable" border=1>
+</table>
+
+<script type="text/javascript">
+update_comments();
+setInterval( update_comments, 8000 );
+</script>
