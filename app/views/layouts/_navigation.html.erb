@@ -23,7 +23,7 @@
   </li>
 </ul>
 <div style="float:right; font-size: 15px; padding-top: 10px">
-  <% if session[:authenticated] == false %>
+  <% if session[:authenticated] != true %>
   Guest
   <% else %>
   <%= User.find_by_id(session[:user_id]).username %>

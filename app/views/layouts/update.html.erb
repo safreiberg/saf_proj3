@@ -1,0 +1,12 @@
+<tr>
+  <th>Title</th>
+  <th>User</th>
+  <th>Date</th>
+</tr>
+<% @posts.each do |post| %>
+<tr>
+  <td><%= link_to post.title, :controller => "posts", :action => "show", :id => @post %></td>
+  <td><%= User.find_by_id(post.user_id).username %></td>
+  <td><%= post.created_at %></td>
+</tr>
+<% end %>
