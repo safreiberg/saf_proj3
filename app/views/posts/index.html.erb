@@ -13,9 +13,6 @@
 
 <% end %>
 
-<table id="p" border=1>
-</table>
-
 <div id="posttable">
 </div>
 
@@ -24,12 +21,12 @@ update();
 setInterval( update, 8000 );
 
 $('document').ready(function() {
-  $(".addpost").live("ajax:send", function(event,xhr,status){
+  $(".addpost").live("ajax:complete", function(event,xhr,status){
     $('#title').val('');
     $('#content').val('');
     update();
   });
-  $("a").live("ajax:send", function(event,xhr,status){
+  $("a").live("ajax:complete", function(event,xhr,status){
     update();
   });
 });

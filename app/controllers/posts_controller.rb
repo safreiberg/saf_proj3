@@ -17,6 +17,7 @@ class PostsController < ApplicationController
   def new
   end
   
+  ## Upvote a post
   def uppost
     if session[:authenticated]
       pv = PostVote.where(:post_id => params[:id], :user_id => session[:user_id]).first
@@ -31,6 +32,7 @@ class PostsController < ApplicationController
     end
   end
   
+  ## Downvote a post
   def downpost
     if session[:authenticated]  
       pv = PostVote.where(:post_id => params[:id], :user_id => session[:user_id]).first
@@ -45,6 +47,7 @@ class PostsController < ApplicationController
     end
   end
   
+  ## Upvote a comment
   def upcomment
     if session[:authenticated]
       cv = CommentVote.where(:comment_id => params[:id], :user_id => session[:user_id]).first
@@ -59,6 +62,7 @@ class PostsController < ApplicationController
     end
   end
   
+  ## Downvote a comment
   def downcomment
     if session[:authenticated]  
       cv = CommentVote.where(:comment_id => params[:id], :user_id => session[:user_id]).first

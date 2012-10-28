@@ -13,11 +13,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  comment_id: 1
-  user_id: 1
-  up: false
+  comment_id: "1"
+  user_id: "1"
+  up: "true"
 
 two:
-  comment_id: 1
-  user_id: 1
-  up: false
+  comment_id: "1"
+  user_id: "2"
+  up: "false"

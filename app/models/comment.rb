@@ -9,6 +9,9 @@
 #  parent     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  rank       :integer
+#  downvotes  :integer
+#  upvotes    :integer
 #
 
 class Comment < ActiveRecord::Base

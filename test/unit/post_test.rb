@@ -8,6 +8,9 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  title      :string(255)
+#  upvotes    :integer
+#  downvotes  :integer
+#  rank       :integer
 #
 
 require 'test_helper'

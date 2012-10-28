@@ -9,18 +9,23 @@
 #  parent     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  rank       :integer
+#  downvotes  :integer
+#  upvotes    :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  post_id: 1
-  user_id: 1
-  content: MyText
-  parent: 1
+  post_id: "1"
+  user_id: "1"
+  content: "MyText"
+  parent: nil
+  id: "1"
 
 two:
-  post_id: 1
-  user_id: 1
-  content: MyText
-  parent: 1
+  post_id: "1"
+  user_id: "1"
+  content: "MyText2"
+  parent: nil
+  id: "2"

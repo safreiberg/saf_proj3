@@ -11,3 +11,15 @@
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+first:
+  title: "First post!"
+  content: "trolol"
+  user_id: "1"
+  id: "1"
+  
+second: 
+  title: "Second post"
+  content: "got here second"
+  user_id: "2"
+  id: "2"

@@ -16,7 +16,7 @@
 
 <% end %>
 
-<div id="commentstable" border=1>
+<div id="commentstable">
 </div>
 
 <script type="text/javascript">
@@ -24,14 +24,12 @@ update_comments();
 setInterval( update_comments, 8000 );
 
 $('document').ready(function() {
-  $(".addcomment").live("ajax:send", function(event,xhr,status){
+  $(".addcomment").live("ajax:complete", function(event,xhr,status){
     $('#content').val('');
     update_comments();
   });
-  $("a").live("ajax:send", function(event,xhr,status){
+  $("a").live("ajax:complete", function(event,xhr,status){
     update_comments();
   });
 });
-
-
 </script>

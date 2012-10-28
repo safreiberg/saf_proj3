@@ -25,5 +25,12 @@ class PostsControllerTest < ActionController::TestCase
     get :new
     assert_response :success
   end
+  
+  test "number posts and comments" do
+    get :index
+    assert_response :success
+    
+    add_post
+  end
 
 end
