@@ -9,11 +9,6 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.limit(10)
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json  { render :json => @posts }
-    end
   end
 
   def create
