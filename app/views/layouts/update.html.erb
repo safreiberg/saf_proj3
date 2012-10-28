@@ -1,12 +1,13 @@
-<tr>
-  <th>Title</th>
-  <th>User</th>
-  <th>Date</th>
-</tr>
 <% @posts.each do |post| %>
-<tr>
-  <td><%= link_to post.title, :controller => "posts", :action => "show", :id => post.id %></td>
-  <td><%= User.find_by_id(post.user_id).username %></td>
-  <td><%= post.created_at %></td>
-</tr>
+
+<div style="width:60%; padding-bottom:1cm; background-color:#FFFFFF;">
+  <div style="float:left; width:10%;">
+    <%= link_to "up: " + post.upvotes.to_s, {:controller => "posts", :action => "uppost", :id => post.id}, :remote => true %> <br />
+    <%= link_to "down: " + post.downvotes.to_s, {:controller => "posts", :action => "downpost", :id => post.id}, :remote => true %> <br />
+  </div>
+  <div style="float:right; width:90%">
+    <%= link_to post.title, :controller => "posts", :action => "show", :id => post.id %> <br />
+    <%= "Posted by " + User.find_by_id(post.user_id).username.to_s + " at " + post.created_at.strftime("%r: %b. %d, %Y").to_s %>
+  </div>
+</div> <br />
 <% end %>

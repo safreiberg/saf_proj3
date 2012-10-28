@@ -22,6 +22,34 @@ class PostsController < ApplicationController
   def new
   end
   
+  def uppost
+    if session[:authenticated]
+      pv = PostVote.where(:post_id => params[:id], :user_id => session[:user_id]).first
+      if pv && !pv.up
+        Post.find_by_id(params[:id]).decrement_downvotes
+        pv.destroy
+      end
+      if pv.nil?
+        Post.find_by_id(params[:id]).increment_upvotes
+        PostVote.create(:post_id => params[:id], :user_id => session[:user_id], :up => true)
+      end
+    end
+  end
+  
+  def downpost
+    if session[:authenticated]  
+      pv = PostVote.where(:post_id => params[:id], :user_id => session[:user_id]).first
+      if pv && pv.up
+        Post.find_by_id(params[:id]).decrement_upvotes
+        pv.destroy
+      end
+      if pv.nil?
+        Post.find_by_id(params[:id]).increment_downvotes
+        PostVote.create(:post_id => params[:id], :user_id => session[:user_id], :up => false)
+      end
+    end
+  end
+  
   def add_comment
     ## Prevent commenting in someone else's name
     if session[:user_id].to_i == params[:user_id].to_i
@@ -38,7 +66,7 @@ class PostsController < ApplicationController
   def add_post
     ## Prevent commenting in someone else's name
     if session[:user_id].to_i == params[:user_id].to_i
-      post = Post.new(:user_id => params[:user_id], :content => params[:content], :title => params[:title])
+      post = Post.new(:user_id => params[:user_id], :content => params[:content], :title => params[:title], :upvotes => 0, :downvotes => 0, :rank => 0)
       if post.save
         flash[:notice] = "Successfully added post."
       else
@@ -50,7 +78,7 @@ class PostsController < ApplicationController
   
   def update 
     logger.debug("updated");
-    @posts = Post.limit(10)
+    @posts = Post.order("rank DESC")
     
     render :layout => "update"
   end

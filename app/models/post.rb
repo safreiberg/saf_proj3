@@ -11,5 +11,30 @@
 #
 
 class Post < ActiveRecord::Base
-  attr_accessible :content, :user_id, :title
+  attr_accessible :content, :user_id, :title, :upvotes, :downvotes, :rank
+  
+  def decrement_upvotes
+    self.upvotes = self.upvotes - 1
+    self.rank = self.upvotes - self.downvotes
+    self.save
+  end
+  
+  def decrement_downvotes
+    self.downvotes = self.downvotes - 1
+    self.rank = self.upvotes - self.downvotes
+    self.save
+  end
+  
+  def increment_upvotes
+    self.upvotes = self.upvotes + 1
+    self.rank = self.upvotes - self.downvotes
+    self.save
+  end
+  
+  def increment_downvotes
+    self.downvotes = self.downvotes + 1
+    self.rank = self.upvotes - self.downvotes
+    self.save
+  end
+  
 end

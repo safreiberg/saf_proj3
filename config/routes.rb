@@ -8,6 +8,11 @@ SafProj3::Application.routes.draw do
   get "/posts/update" => "posts#update"
   post "/posts/update" => "posts#update"
   
+  get "/posts/uppost" => "posts#uppost"
+  post "/posts/uppost" => "posts#uppost"  
+  get "/posts/downpost" => "posts#downpost"
+  post "/posts/downpost" => "posts#downpost"
+  
   get "/posts/add_comment" => 'posts#add_comment'
   post "/posts/add_comment" => 'posts#add_comment'
   

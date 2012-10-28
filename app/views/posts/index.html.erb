@@ -2,21 +2,36 @@
 
 <% if session[:authenticated] %>
 
-<%= form_tag('/posts/add_post') do %>
+<%= form_tag '/posts/add_post', :remote => true, :class => "addpost"  do %>
   <%= label_tag(:title, "Title:") %>
   <%= text_field_tag(:title) %>
   <%= label_tag(:content, "Post:") %>
   <%= text_area_tag(:content) %>
   <%= hidden_field_tag 'user_id', session[:user_id] %><br />
-  <%= submit_tag("Submit") %>
+  <%= submit_tag "Submit" %>
 <% end %>
 
 <% end %>
 
-<table id="posttable" border=1>
+<table id="p" border=1>
 </table>
+
+<div id="posttable">
+</div>
 
 <script type="text/javascript">
 update();
 setInterval( update, 8000 );
-</script
+
+$('document').ready(function() {
+  $(".addpost").live("ajax:send", function(event,xhr,status){
+    $('#title').val('');
+    $('#content').val('');
+    update();
+  });
+  $("a").live("ajax:send", function(event,xhr,status){
+    update();
+  });
+});
+
+</script>
