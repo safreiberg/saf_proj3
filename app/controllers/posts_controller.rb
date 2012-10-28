@@ -50,10 +50,38 @@ class PostsController < ApplicationController
     end
   end
   
+  def upcomment
+    if session[:authenticated]
+      cv = CommentVote.where(:comment_id => params[:id], :user_id => session[:user_id]).first
+      if cv && !cv.up
+        Comment.find_by_id(params[:id]).decrement_downvotes
+        cv.destroy
+      end
+      if cv.nil?
+        Comment.find_by_id(params[:id]).increment_upvotes
+        CommentVote.create(:comment_id => params[:id], :user_id => session[:user_id], :up => true)
+      end
+    end
+  end
+  
+  def downcomment
+    if session[:authenticated]  
+      cv = CommentVote.where(:comment_id => params[:id], :user_id => session[:user_id]).first
+      if cv && cv.up
+        Comment.find_by_id(params[:id]).decrement_upvotes
+        cv.destroy
+      end
+      if cv.nil?
+        Comment.find_by_id(params[:id]).increment_downvotes
+        CommentVote.create(:comment_id => params[:id], :user_id => session[:user_id], :up => false)
+      end
+    end
+  end
+  
   def add_comment
     ## Prevent commenting in someone else's name
     if session[:user_id].to_i == params[:user_id].to_i
-      comment = Comment.new(:user_id => params[:user_id], :post_id => params[:post_id], :content => params[:content])
+      comment = Comment.new(:user_id => params[:user_id], :post_id => params[:post_id], :content => params[:content], :upvotes => 0, :downvotes => 0, :rank => 0)
       if comment.save
         flash[:notice] = "Successfully added comment."
       else
@@ -85,7 +113,7 @@ class PostsController < ApplicationController
   
   def update_comments
     logger.debug("updated comments")
-    @comments = Comment.where(:post_id => params[:id])
+    @comments = Comment.where(:post_id => params[:id]).order("rank DESC")
     
     render :layout => "update_comments"
   end

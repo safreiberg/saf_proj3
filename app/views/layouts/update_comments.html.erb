@@ -1,12 +1,13 @@
-<tr>
-  <th>User</th>
-  <th>Content</th>
-  <th>Date</th>
-</tr>
 <% @comments.each do |comment| %>
-<tr>
-  <td><%= User.find_by_id(comment.user_id).username %></td>
-  <td><%= comment.content %></td>
-  <td><%= comment.created_at %></td>
-</tr>
+
+<div style="width:60%; padding-bottom:1cm; background-color:#FFFFFF;">
+  <div style="float:left; width:10%;">
+    <%= link_to "up: " + comment.upvotes.to_s, {:controller => "posts", :action => "upcomment", :id => comment.id}, :remote => true %> <br />
+    <%= link_to "down: " + comment.downvotes.to_s, {:controller => "posts", :action => "downcomment", :id => comment.id}, :remote => true %> <br />
+  </div>
+  <div style="float:right; width:90%">
+    <%= comment.content %> <br />
+    <%= "Posted by " + User.find_by_id(comment.user_id).username.to_s + " at " + comment.created_at.strftime("%r: %b. %d, %Y").to_s %>
+  </div>
+</div> <br />
 <% end %>

@@ -13,6 +13,11 @@ SafProj3::Application.routes.draw do
   get "/posts/downpost" => "posts#downpost"
   post "/posts/downpost" => "posts#downpost"
   
+  get "/posts/upcomment" => "posts#upcomment"
+  post "/posts/upcomment" => "posts#upcomment"  
+  get "/posts/downcomment" => "posts#downcomment"
+  post "/posts/downcomment" => "posts#downcomment"
+  
   get "/posts/add_comment" => 'posts#add_comment'
   post "/posts/add_comment" => 'posts#add_comment'
   
