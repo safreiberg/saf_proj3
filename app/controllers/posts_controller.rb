@@ -20,13 +20,13 @@ class PostsController < ApplicationController
   def uppost
     if session[:authenticated]
       pv = PostVote.where(:post_id => params[:id], :user_id => session[:user_id]).first
-      if pv && !pv.up
-        Post.find_by_id(params[:id]).decrement_downvotes
-        pv.destroy
-      end
       if pv.nil?
         Post.find_by_id(params[:id]).increment_upvotes
         PostVote.create(:post_id => params[:id], :user_id => session[:user_id], :up => true)
+      end
+      if pv && !pv.up
+        Post.find_by_id(params[:id]).decrement_downvotes
+        pv.destroy
       end
     end
   end
@@ -34,13 +34,13 @@ class PostsController < ApplicationController
   def downpost
     if session[:authenticated]  
       pv = PostVote.where(:post_id => params[:id], :user_id => session[:user_id]).first
-      if pv && pv.up
-        Post.find_by_id(params[:id]).decrement_upvotes
-        pv.destroy
-      end
       if pv.nil?
         Post.find_by_id(params[:id]).increment_downvotes
         PostVote.create(:post_id => params[:id], :user_id => session[:user_id], :up => false)
+      end
+      if pv && pv.up
+        Post.find_by_id(params[:id]).decrement_upvotes
+        pv.destroy
       end
     end
   end
@@ -48,13 +48,13 @@ class PostsController < ApplicationController
   def upcomment
     if session[:authenticated]
       cv = CommentVote.where(:comment_id => params[:id], :user_id => session[:user_id]).first
-      if cv && !cv.up
-        Comment.find_by_id(params[:id]).decrement_downvotes
-        cv.destroy
-      end
       if cv.nil?
         Comment.find_by_id(params[:id]).increment_upvotes
         CommentVote.create(:comment_id => params[:id], :user_id => session[:user_id], :up => true)
+      end
+      if cv && !cv.up
+        Comment.find_by_id(params[:id]).decrement_downvotes
+        cv.destroy
       end
     end
   end
@@ -62,13 +62,13 @@ class PostsController < ApplicationController
   def downcomment
     if session[:authenticated]  
       cv = CommentVote.where(:comment_id => params[:id], :user_id => session[:user_id]).first
-      if cv && cv.up
-        Comment.find_by_id(params[:id]).decrement_upvotes
-        cv.destroy
-      end
       if cv.nil?
         Comment.find_by_id(params[:id]).increment_downvotes
         CommentVote.create(:comment_id => params[:id], :user_id => session[:user_id], :up => false)
+      end
+      if cv && cv.up
+        Comment.find_by_id(params[:id]).decrement_upvotes
+        cv.destroy
       end
     end
   end
