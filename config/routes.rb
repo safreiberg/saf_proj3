@@ -50,6 +50,9 @@ SafProj3::Application.routes.draw do
   get '/logout' => 'session#destroy'
   post '/logout' => 'session#destroy'
   
+  get '/user/top' => 'user#top'
+  get '/user/top/update' => 'user#update_top'
+  
   resources :user
   
   get '/' => 'posts#index'
@@ -66,6 +69,8 @@ SafProj3::Application.routes.draw do
   
   get '/user/edit' => 'user#edit'
   post '/user/edit' => 'user#edit'
+  
+
     
   root :to => 'posts#index'
   match '*path' => 'welcome#oops'

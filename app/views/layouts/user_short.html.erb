@@ -1,0 +1,23 @@
+<tr>
+  <th>Username</th>
+  <th>Link Karma</th>
+  <th>Comment Karma</th>
+  <th>Total Karma</th>
+</tr>
+<% @users.each do |u| %>
+<tr>
+  <td><%= u.username %></td>
+  <td><%= u.link_karma %></td>
+  <td><%= u.comment_karma %></td>
+  <td><%= u.link_karma.to_i + u.comment_karma.to_i %></td>
+</tr>
+<% end %>
+
+<style type="text/css">
+th {
+  padding-right: 40px;
+}
+tr {
+  padding-bottom: 20px;
+}
+</style>

@@ -4,9 +4,19 @@ class UserController < ApplicationController
   end
 
   def show
+    @user = User.find_by_id(params[:id])
   end
 
   def edit
+  end
+  
+  def top
+  end
+  
+  def update_top
+    @users = User.find(:all)
+    @users = @users.sort_by &:total_karma
+    render :layout => "user_short"
   end
   
   def create

@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.limit(10)
+    @posts = Post.find(:all)
   end
 
   def create

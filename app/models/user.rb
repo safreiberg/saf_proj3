@@ -24,4 +24,27 @@ class User < ActiveRecord::Base
   validates :username, :presence => true
   validates :username, :uniqueness => true
   
+  def increment_link_karma
+    self.link_karma = self.link_karma + 1
+    self.save
+  end
+  
+  def decrement_link_karma
+    self.link_karma = self.link_karma - 1
+    self.save
+  end
+  
+  def increment_comment_karma
+    self.comment_karma = self.comment_karma + 1
+    self.save
+  end
+  
+  def decrement_comment_karma
+    self.comment_karma = self.comment_karma - 1
+    self.save
+  end
+  
+  def total_karma
+    return -(self.comment_karma + self.link_karma)
+  end
 end
