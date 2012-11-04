@@ -6,6 +6,16 @@ class UserController < ApplicationController
   def show
     @user = User.find_by_id(params[:id])
   end
+  
+  def update_posts
+    @posts = Post.where(:user_id => params[:id])
+    render :layout => "user_posts"
+  end
+  
+  def update_comments
+    @comments = Comment.where(:user_id => params[:id])
+    render :layout => "user_comments"
+  end
 
   def edit
   end

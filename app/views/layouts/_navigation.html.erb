@@ -18,6 +18,9 @@
   <li>
     <%= link_to("Posts", "/posts/index")%>
   </li>
+  <li>
+    <%= link_to "Top Users", :controller => :user, :action => :top%> 
+  </li>
 </ul>
 <div style="float:right; font-size: 15px; padding-top: 10px">
   <% if session[:authenticated] != true %>

@@ -12,3 +12,12 @@
 <h3>
   Comment Karma: <%= @user.comment_karma %>
 </h3>
+<h2><%= @user.username%>'s Posts:</h2>
+  <div id="posts"></div>
+<h2><%= @user.username%>'s Comments:</h2>  
+  <div id="comments"></div>
+  
+<script type="text/javascript">
+update_show();
+setInterval( update_show, 8000 );
+</script>

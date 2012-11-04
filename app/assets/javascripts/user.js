@@ -14,3 +14,35 @@ var update_top = function() {
     }
   });
 }
+
+var m = 0;
+
+var update_show = function() {
+  console.log("update_show_posts" + m)
+  m = m + 1;
+  var pathArray = window.location.pathname.split( '/' );
+  var url = '/user/show/'+ pathArray.slice(-1)[0] +'/updateposts';
+  $.ajax({
+    type: 'GET',
+    url: url,
+    success: function(data) {
+      console.log(data);
+      console.log(m);
+      $("#posts").html(data);
+    }
+  });
+  
+  console.log("update_show_comments" + m)
+  m = m + 1;
+  var pathArray = window.location.pathname.split( '/' );
+  var url = '/user/show/'+ pathArray.slice(-1)[0] +'/updatecomments';
+  $.ajax({
+    type: 'GET',
+    url: url,
+    success: function(data) {
+      console.log(data);
+      console.log(m);
+      $("#comments").html(data);
+    }
+  });
+}
