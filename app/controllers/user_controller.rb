@@ -16,6 +16,11 @@ class UserController < ApplicationController
     @comments = Comment.where(:user_id => params[:id])
     render :layout => "user_comments"
   end
+  
+  def update_stats
+    @user = User.find_by_id(params[:id])
+    render :layout => "user_stats"
+  end
 
   def edit
   end

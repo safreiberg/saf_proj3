@@ -33,7 +33,6 @@ var update_show = function() {
   });
   
   console.log("update_show_comments" + m)
-  m = m + 1;
   var pathArray = window.location.pathname.split( '/' );
   var url = '/user/show/'+ pathArray.slice(-1)[0] +'/updatecomments';
   $.ajax({
@@ -43,6 +42,19 @@ var update_show = function() {
       console.log(data);
       console.log(m);
       $("#comments").html(data);
+    }
+  });
+  
+  console.log("update_show_stats" + m)
+  var pathArray = window.location.pathname.split( '/' );
+  var url = '/user/show/'+ pathArray.slice(-1)[0] +'/updatestats';
+  $.ajax({
+    type: 'GET',
+    url: url,
+    success: function(data) {
+      console.log(data);
+      console.log(m);
+      $("#stats").html(data);
     }
   });
 }

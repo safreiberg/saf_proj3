@@ -6,12 +6,22 @@
   Administrator (moderator privilege)
 </h3>
 <% end %>
-<h3>
-  Link Karma: <%= @user.link_karma %>
-</h3>
-<h3>
-  Comment Karma: <%= @user.comment_karma %>
-</h3>
+
+<table id="stats">
+  <tr>
+    <td>Link Karma:</td>
+    <td><%= @user.link_karma %></td>
+  </tr>
+  <tr>
+    <td>Comment Karma:</td>
+    <td><%= @user.comment_karma %></td>
+  </tr>
+  <tr>
+    <td>Total Karma:</td>
+    <td><%= @user.comment_karma.to_i + @user.link_karma.to_i %></td>
+  </tr>
+</table>
+
 <h2><%= @user.username%>'s Posts:</h2>
   <div id="posts"></div>
 <h2><%= @user.username%>'s Comments:</h2>  

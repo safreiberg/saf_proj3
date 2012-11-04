@@ -2,7 +2,7 @@
 
 <div style="width:60%; padding-bottom:1cm; background-color:#FFFFFF;">
   <div style="text-align:center;">
-    <%= link_to "Post", {:controller => "posts", :action => "show", :id => comment.post_id } %>
+    <%= link_to "See original Post", {:controller => "posts", :action => "show", :id => comment.post_id } %>
   </div>
   <div style="float:left; width:20%;">
     <%= link_to "up: " + comment.upvotes.to_s, {:controller => "posts", :action => "upcomment", :id => comment.id}, :remote => true %> <br />

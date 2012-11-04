@@ -47,4 +47,23 @@ class User < ActiveRecord::Base
   def total_karma
     return -(self.comment_karma + self.link_karma)
   end
+  
+  def link_karma_rank
+    User.where("link_karma > ?", self.link_karma).count + 1
+  end
+  
+  def comment_karma_rank
+    User.where("comment_karma > ?", self.comment_karma).count + 1
+  end
+  
+  def total_karma_rank
+    users = User.find(:all).sort_by &:total_karma
+    rank = 1
+    users.each do |u|
+      if u == self
+        return rank
+      end
+      rank = rank + 1
+    end
+  end
 end

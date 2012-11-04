@@ -1,16 +1,20 @@
 <tr>
+  <th>Rank</th>
   <th>Username</th>
   <th>Link Karma</th>
   <th>Comment Karma</th>
   <th>Total Karma</th>
 </tr>
+<% i = 1 %>
 <% @users.each do |u| %>
 <tr>
-  <td><%= u.username %></td>
+  <td><%= i %>
+  <td><%= link_to u.username, :controller => :user, :action => :show, :id => u.id %></td>
   <td><%= u.link_karma %></td>
   <td><%= u.comment_karma %></td>
   <td><%= u.link_karma.to_i + u.comment_karma.to_i %></td>
 </tr>
+<% i = i + 1 %>
 <% end %>
 
 <style type="text/css">

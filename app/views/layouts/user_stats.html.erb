@@ -1,0 +1,33 @@
+<tr>
+  <th>Karma Type</th>
+  <th>Amount</th>
+  <th>Rank</th>
+</tr>
+<tr>
+  <td>Link Karma:</td>
+  <td><%= @user.link_karma %></td>
+  <td><%= @user.link_karma_rank.to_s + ' / ' + User.count.to_s%>
+</tr>
+<tr>
+  <td>Comment Karma:</td>
+  <td><%= @user.comment_karma %></td>
+  <td><%= @user.comment_karma_rank.to_s + ' / ' + User.count.to_s%>
+</tr>
+<tr>
+  <td>Total Karma:</td>
+  <td><%= @user.comment_karma.to_i + @user.link_karma.to_i %></td>
+  <td><%= @user.total_karma_rank.to_s + ' / ' + User.count.to_s%>
+</tr>
+
+
+<style type="text/css">
+td {
+  padding-right: 25px;
+}
+tr {
+  padding-bottom: 5px;
+}
+th {
+  padding-right: 25px;
+}
+</style>

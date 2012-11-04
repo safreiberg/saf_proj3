@@ -54,6 +54,7 @@ SafProj3::Application.routes.draw do
   get '/user/top/update' => 'user#update_top'
   get '/user/show/:id/updateposts' => 'user#update_posts'
   get '/user/show/:id/updatecomments' => 'user#update_comments'
+  get '/user/show/:id/updatestats' => 'user#update_stats'
   
   resources :user
   
