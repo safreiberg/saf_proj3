@@ -21,9 +21,6 @@
   <li>
     <%= link_to "Top Users", :controller => :user, :action => :top %> 
   </li>
-  <li>
-    <%= link_to "Staff Upvoted", :controller => :post, :action => :staff_voted %> 
-  </li>
 </ul>
 <div style="float:right; font-size: 15px; padding-top: 10px">
   <% if session[:authenticated] != true %>

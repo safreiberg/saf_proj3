@@ -116,9 +116,4 @@ class PostsController < ApplicationController
     
     render :layout => "update_comments"
   end
-  
-  def staff_voted
-    admins = User.where(:admin => true)
-     
-  end
 end
