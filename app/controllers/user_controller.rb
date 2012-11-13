@@ -36,6 +36,8 @@ class UserController < ApplicationController
   
   def create
     @user = User.new(params[:user])
+    @user.link_karma = 0
+    @user.comment_karma = 0
     logger.debug("Just attempted to create a user.")
     if @user.save
       logger.debug("Your account has been created")
