@@ -17,6 +17,9 @@
 class User < ActiveRecord::Base
   attr_accessible :admin, :email, :name, :password_digest, :password, :username, :password_confirmation, :link_karma, :comment_karma
   has_secure_password
+  
+  has_many :comments
+  has_many :posts
 
   validates :password, :presence => true, :on => :create
   validates :email, :presence => true
@@ -24,46 +27,26 @@ class User < ActiveRecord::Base
   validates :username, :presence => true
   validates :username, :uniqueness => true
   
-  def increment_link_karma
-    self.link_karma = self.link_karma + 1
-    self.save
-  end
-  
-  def decrement_link_karma
-    self.link_karma = self.link_karma - 1
-    self.save
-  end
-  
-  def increment_comment_karma
-    self.comment_karma = self.comment_karma + 1
-    self.save
-  end
-  
-  def decrement_comment_karma
-    self.comment_karma = self.comment_karma - 1
-    self.save
-  end
-  
-  def total_karma
-    return -(self.comment_karma + self.link_karma)
-  end
-  
-  def link_karma_rank
-    User.where("link_karma > ?", self.link_karma).count + 1
-  end
-  
-  def comment_karma_rank
-    User.where("comment_karma > ?", self.comment_karma).count + 1
-  end
-  
-  def total_karma_rank
-    users = User.find(:all).sort_by &:total_karma
-    rank = 1
-    users.each do |u|
-      if u == self
-        return rank
-      end
-      rank = rank + 1
+  ## Processes the effects of a vote being posted to the author
+  ## of a comment.
+  def commentvote(up)
+    if up
+      self.comment_karma = self.comment_karma + 1
+    else
+      self.comment_karma = self.comment_karma - 1
     end
+    self.save
   end
+  
+  ## Processes the effects of a vote being posted to the author
+  ## of a post.
+  def postvote(up)
+    if up
+      self.link_karma = self.link_karma + 1
+    else
+      self.link_karma = self.link_karma - 1
+    end
+    self.save
+  end
+  
 end

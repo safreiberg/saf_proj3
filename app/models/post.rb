@@ -15,41 +15,37 @@
 
 class Post < ActiveRecord::Base
   attr_accessible :content, :user_id, :title, :upvotes, :downvotes, :rank
+  belongs_to :user
+  has_many :post_votes
   
-  def user
-    return User.find_by_id(self.user_id)
+  ## Processes the effects of a given user voting in a given way (up or down)
+  ## on this Post. Actions are:
+  ##  1) Delete the previous vote, if present. This also undoes any appropriate
+  ##     karma changes that are necessary.
+  ##  2) Create the new PostVote.
+  ##  3) Update the author and this Post's karma.
+  def vote(user, up)
+    prev_vote = self.post_votes.where(user_id: user.id)
+    if !prev_vote.nil?
+      prev_vote.destroy
+    end
+    CommentVote.create(user_id: user.id, comment_id: self.id, up: up)
+    if up
+      self.upvotes = self.upvotes + 1
+    else
+      self.downvotes = self.downvotes + 1
+    end
+    self.user.postvote(up)
+    self.update_rank
+    self.save
   end
   
-  def decrement_upvotes
-    self.upvotes = self.upvotes - 1
+  ## Updates the rank of this Post according to the formula:
+  ##   rank = upvotes - downvotes
+  ## This is called when new PostVotes are added.
+  def update_rank
     self.rank = self.upvotes - self.downvotes
     self.save
-    u = self.user
-    u.decrement_link_karma
-  end
-  
-  def decrement_downvotes
-    self.downvotes = self.downvotes - 1
-    self.rank = self.upvotes - self.downvotes
-    self.save
-    u = self.user
-    u.increment_link_karma
-  end
-  
-  def increment_upvotes
-    self.upvotes = self.upvotes + 1
-    self.rank = self.upvotes - self.downvotes
-    self.save
-    u = self.user
-    u.increment_link_karma
-  end
-  
-  def increment_downvotes
-    self.downvotes = self.downvotes + 1
-    self.rank = self.upvotes - self.downvotes
-    self.save
-    u = self.user
-    u.decrement_link_karma
   end
   
 end

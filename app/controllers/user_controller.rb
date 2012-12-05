@@ -8,12 +8,14 @@ class UserController < ApplicationController
   end
   
   def update_posts
-    @posts = Post.where(:user_id => params[:id])
+    u = User.find_by_id(params[:id])
+    @posts = u.posts
     render :layout => "user_posts"
   end
   
   def update_comments
-    @comments = Comment.where(:user_id => params[:id])
+    u = User.find_by_id(params[:id])
+    @comments = u.comments
     render :layout => "user_comments"
   end
   

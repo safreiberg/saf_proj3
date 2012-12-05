@@ -16,40 +16,37 @@
 
 class Comment < ActiveRecord::Base
   attr_accessible :content, :parent, :post_id, :user_id, :upvotes, :downvotes, :rank
+  belongs_to :post
+  belongs_to :user
+  has_many :comment_votes
   
-  def user
-    return User.find_by_id(self.user_id)
+  ## Processes the effects of a given user voting in a given way (up or down)
+  ## on this Comment. Actions are:
+  ##  1) Delete the previous vote, if present. This also undoes any appropriate
+  ##     karma changes that are necessary.
+  ##  2) Create the new CommentVote.
+  ##  3) Update the author and this Comment's karma.
+  def vote(user, up)
+    prev_vote = self.comment_votes.where(user_id: user.id)
+    if !prev_vote.nil?
+      prev_vote.destroy
+    end
+    CommentVote.create(user_id: user.id, comment_id: self.id, up: up)
+    if up
+      self.upvotes = self.upvotes + 1
+    else
+      self.downvotes = self.downvotes + 1
+    end
+    self.user.commentvote
+    self.update_rank
+    self.save
   end
   
-  def decrement_upvotes
-    self.upvotes = self.upvotes - 1
+  ## Updates the rank of this Comment according to the formula:
+  ##   rank = upvotes - downvotes
+  ## This is called when new CommentVotes are added.
+  def update_rank
     self.rank = self.upvotes - self.downvotes
     self.save
-    u = self.user
-    u.decrement_comment_karma
-  end
-  
-  def decrement_downvotes
-    self.downvotes = self.downvotes - 1
-    self.rank = self.upvotes - self.downvotes
-    self.save
-    u = self.user
-    u.increment_comment_karma
-  end
-  
-  def increment_upvotes
-    self.upvotes = self.upvotes + 1
-    self.rank = self.upvotes - self.downvotes
-    self.save
-    u = self.user
-    u.increment_comment_karma
-  end
-  
-  def increment_downvotes
-    self.downvotes = self.downvotes + 1
-    self.rank = self.upvotes - self.downvotes
-    self.save
-    u = self.user
-    u.decrement_comment_karma
   end
 end
