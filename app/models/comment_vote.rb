@@ -34,7 +34,7 @@ class CommentVote < ActiveRecord::Base
     else
       self.user.comment_karma = self.user.comment_karma + 1
       self.user.save
-      self.comment.upvotes = self.comment.upvotes + 1
+      self.comment.downvotes = self.comment.downvotes - 1
       self.comment.save
       self.comment.update_rank
     end

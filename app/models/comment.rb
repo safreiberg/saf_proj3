@@ -27,8 +27,8 @@ class Comment < ActiveRecord::Base
   ##  2) Create the new CommentVote.
   ##  3) Update the author and this Comment's karma.
   def vote(user, up)
-    prev_vote = self.comment_votes.where(user_id: user.id)
-    if !prev_vote.nil?
+    prev_vote = self.comment_votes.where(user_id: user.id).first
+    if !prev_vote.nil? && prev_vote != []
       prev_vote.destroy
     end
     CommentVote.create(user_id: user.id, comment_id: self.id, up: up)

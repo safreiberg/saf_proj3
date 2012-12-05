@@ -25,19 +25,25 @@ class Post < ActiveRecord::Base
   ##  2) Create the new PostVote.
   ##  3) Update the author and this Post's karma.
   def vote(user, up)
-    prev_vote = self.post_votes.where(user_id: user.id)
-    if !prev_vote.nil?
+    logger.debug "Before; u, p: " + self.upvotes.to_s + ", " + self.downvotes.to_s
+    prev_vote = self.post_votes.where(user_id: user.id).first
+    if !prev_vote.nil? && prev_vote != []
+      logger.debug "prev note: " + prev_vote.inspect
       prev_vote.destroy
     end
-    CommentVote.create(user_id: user.id, comment_id: self.id, up: up)
+    self.reload
+    logger.debug "Early middle; u, p: " + self.upvotes.to_s + ", " + self.downvotes.to_s
+    PostVote.create(user_id: user.id, post_id: self.id, up: up)
     if up
       self.upvotes = self.upvotes + 1
     else
       self.downvotes = self.downvotes + 1
     end
+    self.save!
+    logger.debug "Middle; u, p: " + self.upvotes.to_s + ", " + self.downvotes.to_s
     self.user.postvote(up)
     self.update_rank
-    self.save
+    logger.debug "After; u, p: " + self.upvotes.to_s + ", " + self.downvotes.to_s
   end
   
   ## Updates the rank of this Post according to the formula:
@@ -45,7 +51,7 @@ class Post < ActiveRecord::Base
   ## This is called when new PostVotes are added.
   def update_rank
     self.rank = self.upvotes - self.downvotes
-    self.save
+    self.save!
   end
   
 end

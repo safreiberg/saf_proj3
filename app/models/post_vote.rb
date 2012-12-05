@@ -27,15 +27,15 @@ class PostVote < ActiveRecord::Base
   def clean
     if self.up
       self.user.link_karma = self.user.link_karma - 1
-      self.user.save
+      self.user.save!
       self.post.upvotes = self.post.upvotes - 1
-      self.post.save
+      self.post.save!
       self.post.update_rank
     else
       self.user.link_karma = self.user.link_karma + 1
-      self.user.save
-      self.post.upvotes = self.post.upvotes + 1
-      self.post.save
+      self.user.save!
+      self.post.downvotes = self.post.downvotes - 1
+      self.post.save!
       self.post.update_rank
     end
   end

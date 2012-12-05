@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
     else
       self.comment_karma = self.comment_karma - 1
     end
-    self.save
+    self.save!
   end
   
   ## Processes the effects of a vote being posted to the author
@@ -46,7 +46,11 @@ class User < ActiveRecord::Base
     else
       self.link_karma = self.link_karma - 1
     end
-    self.save
+    self.save!
+  end
+  
+  def total_karma
+    -1*(link_karma + comment_karma)
   end
   
 end

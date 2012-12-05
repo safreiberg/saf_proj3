@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_filter :require_login, only: [:uppost, :downpost, :upcomment, :downcomment, :add_comment, :add_post]
   
+  # 
   def show
     @post = Post.find_by_id(params[:id])
     @comment = Comment.new
