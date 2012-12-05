@@ -49,8 +49,11 @@ class User < ActiveRecord::Base
     self.save!
   end
   
+  # Total karma is used for sorting the users list.
+  # Since sorts are automatically from lowest to highest, and
+  # is makes more sense to sort popularity from highest to 
+  # lowest, this returns the *opposite* of total karma.
   def total_karma
     -1*(link_karma + comment_karma)
   end
-  
 end

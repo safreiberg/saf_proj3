@@ -1,24 +1,36 @@
 class UserController < ApplicationController
+  # Provides the object as a template for creating a 
+  # new user.
   def new
     @user = User.new
   end
 
+  # Shows information about the requested  user.
   def show
     @user = User.find_by_id(params[:id])
   end
   
+  # Called by an asynchronous ajax request on show.html.erb
+  # to update the posts made by this user. Simply returns all of the
+  # posts that this user has ever made, in formatted form.
   def update_posts
     u = User.find_by_id(params[:id])
     @posts = u.posts
     render :layout => "user_posts"
   end
   
+  # Called by an asynchronous ajax request on show.html.erb
+  # to update the comments made by this user. Simply returns all of the
+  # comments that this user has ever made, in formatted form.
   def update_comments
     u = User.find_by_id(params[:id])
     @comments = u.comments
     render :layout => "user_comments"
   end
   
+  # Called by an asynchronous ajax request on show.html.erb
+  # display the statistics about a given user. The output is
+  # html formatted by user_stats.html.erb.
   def update_stats
     @user = User.find_by_id(params[:id])
     render :layout => "user_stats"
@@ -30,24 +42,28 @@ class UserController < ApplicationController
   def top
   end
   
+  # Called by an asynchronous ajax request. Returns formatted HTML
+  # that sorts all users by total karma and displays statistics about
+  # them.
   def update_top
     @users = User.find(:all)
     @users = @users.sort_by &:total_karma
     render :layout => "user_short"
   end
   
+  # Used to create a new user. This is specifically called from the "signup"
+  # page, which is new.html.erb. This method (as explained in lower comments)
+  # also checks if the user *already has* an account and has just forgotten.
+  # In this case, if the password given was correct, then the user is signed
+  # in.
   def create
     @user = User.new(params[:user])
     @user.link_karma = 0
     @user.comment_karma = 0
-    logger.debug("Just attempted to create a user.")
     if @user.save
-      logger.debug("Your account has been created")
       session[:user_id] = @user.id
       flash[:notice] = "Your account has been created."
       session[:authenticated] = true
-      ## TODO
-      ## Mail.welcome_email(@user).deliver
       redirect_to "/"
       return true
     else
@@ -56,8 +72,6 @@ class UserController < ApplicationController
       ##    (1) Account already claimed, and entered the right password
       ##    (2) Account already claimed, and entered the wrong password
       ##    (3) Account not claimed, and entered two different passwords
-      logger.debug("Failure :( to create new account.")
-      logger.debug(params[:user][:email].to_s)
       user = User.find_by_email(params[:user][:email])
       if user && user.authenticate(params[:user][:password])
         ##    This is case 1.
@@ -68,7 +82,6 @@ class UserController < ApplicationController
         return true
       elsif user
         ##    Case 2.
-        logger.debug("Signin failed.")
         if @user = User.where(:email => params[:user][:email]).first
           flash[:notice] = "That email or username is already taken."
           session[:authenticated] = false
@@ -79,7 +92,6 @@ class UserController < ApplicationController
         # Case 3
         flash[:notice] = "Password confirmation was incorrect."
         session[:authenticated] = false
-        logger.debug("Couldn't even log them in.")
         redirect_to '/user/new'
         return false
       end

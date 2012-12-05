@@ -1,59 +1,46 @@
-var z = 0;
-
+// Called as a short poll to update the "top users" page.
 var update_top = function() {
-  console.log("update_top" + z)
-  z = z + 1;
   var url = '/user/top/update';
   $.ajax({
     type: 'GET',
     url: url,
     success: function(data) {
-      console.log(data);
-      console.log(z);
       $("#top_table").html(data);
     }
   });
 }
 
-var m = 0;
-
+// Called as a short poll to update the "show user" page.
+// Three different things need to be rendered here:
+//   1) The posts that a user has made.
+//   2) The comments that a user has made.
+//   3) The statistics about the given user (karma, etc.)
 var update_show = function() {
-  console.log("update_show_posts" + m)
-  m = m + 1;
   var pathArray = window.location.pathname.split( '/' );
+  // Posts
   var url = '/user/show/'+ pathArray.slice(-1)[0] +'/updateposts';
   $.ajax({
     type: 'GET',
     url: url,
     success: function(data) {
-      console.log(data);
-      console.log(m);
       $("#posts").html(data);
     }
   });
-  
-  console.log("update_show_comments" + m)
-  var pathArray = window.location.pathname.split( '/' );
-  var url = '/user/show/'+ pathArray.slice(-1)[0] +'/updatecomments';
+  // Comments
+  url = '/user/show/'+ pathArray.slice(-1)[0] +'/updatecomments';
   $.ajax({
     type: 'GET',
     url: url,
     success: function(data) {
-      console.log(data);
-      console.log(m);
       $("#comments").html(data);
     }
   });
-  
-  console.log("update_show_stats" + m)
-  var pathArray = window.location.pathname.split( '/' );
-  var url = '/user/show/'+ pathArray.slice(-1)[0] +'/updatestats';
+  // Stats
+  url = '/user/show/'+ pathArray.slice(-1)[0] +'/updatestats';
   $.ajax({
     type: 'GET',
     url: url,
     success: function(data) {
-      console.log(data);
-      console.log(m);
       $("#stats").html(data);
     }
   });
