@@ -29,8 +29,6 @@ class PostsControllerTest < ActionController::TestCase
   test "number posts and comments" do
     get :index
     assert_response :success
-    
-    add_post
   end
 
 end

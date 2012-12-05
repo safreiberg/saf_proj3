@@ -1,3 +1,6 @@
+<% if @post.nil? %>
+<h1>No post was found. Sorry!</h1>
+<% else %>
 <h1><%= @post.title %></h1>
 
 <h2><%= @post.content %></h2>
@@ -18,7 +21,7 @@
 
 <div id="commentstable">
 </div>
-
+<% end %>
 <script type="text/javascript">
 update_comments();
 setInterval( update_comments, 8000 );

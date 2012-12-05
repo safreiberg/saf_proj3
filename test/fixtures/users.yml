@@ -22,6 +22,9 @@ stephen:
   username: "saf"
   email: "saf@mit.edu"
   password_digest: <%= BCrypt::Password.create("a") %>
+  comment_karma: 0
+  link_karma: 0
+  admin: false
   
 admin:
   id: "2"
@@ -30,3 +33,5 @@ admin:
   username: "admin"
   password_digest: <%= BCrypt::Password.create("admin") %>
   admin: "true"
+  comment_karma: 0
+  link_karma: 0

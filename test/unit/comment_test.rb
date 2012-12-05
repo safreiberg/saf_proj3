@@ -17,8 +17,11 @@
 require 'test_helper'
 
 class CommentTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-  
+  test "voting on comments" do
+    comment = comments(:two)
+    u = users(:admin)
+    assert_difference('comment.upvotes', 1) do
+      comment.vote(u, true)
+    end
+  end
 end

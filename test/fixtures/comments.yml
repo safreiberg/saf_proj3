@@ -22,6 +22,9 @@ one:
   content: "MyText"
   parent: nil
   id: "1"
+  upvotes: 1
+  downvotes: 1
+  rank: 0
 
 two:
   post_id: "1"
@@ -29,3 +32,6 @@ two:
   content: "MyText2"
   parent: nil
   id: "2"
+  upvotes: 0
+  downvotes: 0
+  rank: 0
