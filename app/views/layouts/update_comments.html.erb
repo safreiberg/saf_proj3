@@ -7,7 +7,7 @@
   </div>
   <div style="float:right; width:80%">
     <%= comment.content %> <br />
-    <%= "Posted by " + User.find_by_id(comment.user_id).username.to_s + " at " + comment.created_at.strftime("%r: %b. %d, %Y").to_s %>
+    <%= "Posted by " + comment.user.username.to_s + " at " + comment.created_at.strftime("%r: %b. %d, %Y").to_s %>
   </div>
 </div> <br />
 <% end %>

@@ -1,13 +1,13 @@
 <h1>Welcome to RedDot</h1>
 
-<% if session[:authenticated] %>
+<% if logged_in? %>
 
 <%= form_tag '/posts/add_post', :remote => true, :class => "addpost"  do %>
   <%= label_tag(:title, "Title:") %>
   <%= text_field_tag(:title) %>
   <%= label_tag(:content, "Post:") %>
   <%= text_area_tag(:content) %>
-  <%= hidden_field_tag 'user_id', session[:user_id] %><br />
+  <%= hidden_field_tag 'user_id', current_user.id %><br />
   <%= submit_tag "Submit" %>
 <% end %>
 

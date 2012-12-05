@@ -1,6 +1,6 @@
 <%= link_to "Home", root_path, :class => 'brand' %>
 <ul class="nav">
-  <% if !session[:user_id].nil? %>
+  <% if logged_in? %>
     <li>
       <%= link_to('Logout', '/logout') %>        
     </li>
@@ -9,7 +9,7 @@
       <%= link_to('Login', '/login')  %>  
     </li>
   <% end %>
-  <% if !session[:user_id].nil? %>
+  <% if !logged_in? %>
   <% else %>
     <li>
       <%= link_to('Sign up', '/signup')  %>
@@ -23,9 +23,9 @@
   </li>
 </ul>
 <div style="float:right; font-size: 15px; padding-top: 10px">
-  <% if session[:authenticated] != true %>
+  <% if !logged_in? %>
   Guest
   <% else %>
-  <%= User.find_by_id(session[:user_id]).username %>
+  <%= current_user.username %>
   <% end %>
 </div>
