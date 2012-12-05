@@ -54,10 +54,13 @@ class PostsController < ApplicationController
   
   def add_comment
     ## Prevent commenting in someone else's name
-    if current_user.id == params[:user_id]
+    logger.debug "adding a comment"
+    if current_user.id.to_s == params[:user_id].to_s
+      logger.debug "correct userid"
       comment = Comment.new(:user_id => params[:user_id], :post_id => params[:post_id],\
        :content => params[:content], :upvotes => 0, :downvotes => 0, :rank => 0)
-      if comment.save
+      logger.debug comment.inspect
+      if comment.save!
         flash[:notice] = "Successfully added comment."
       else
         flash[:notice] = "Oops! Something went wrong."
@@ -68,10 +71,10 @@ class PostsController < ApplicationController
   
   def add_post
     ## Prevent posting in someone else's name
-    if current_user.id == params[:user_id]
+    if current_user.id.to_s == params[:user_id].to_s
       post = Post.new(:user_id => params[:user_id], :content => params[:content],\
        :title => params[:title], :upvotes => 0, :downvotes => 0, :rank => 0)
-      if post.save
+      if post.save!
         flash[:notice] = "Successfully added post."
       else
         flash[:notice] = "Oops! Something went wrong."

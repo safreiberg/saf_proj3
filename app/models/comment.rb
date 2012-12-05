@@ -31,15 +31,16 @@ class Comment < ActiveRecord::Base
     if !prev_vote.nil? && prev_vote != []
       prev_vote.destroy
     end
+    self.reload
     CommentVote.create(user_id: user.id, comment_id: self.id, up: up)
     if up
       self.upvotes = self.upvotes + 1
     else
       self.downvotes = self.downvotes + 1
     end
-    self.user.commentvote
+    self.save!
+    self.user.commentvote(up)
     self.update_rank
-    self.save
   end
   
   ## Updates the rank of this Comment according to the formula:
