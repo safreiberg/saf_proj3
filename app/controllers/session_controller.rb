@@ -29,6 +29,7 @@ class SessionController < ApplicationController
   def destroy
     session[:user_id] = nil
     session[:authenticated] = false
-    redirect_to root_url :notice => "Successfully logged out."
+    flash.now.alert = "Successfully logged out."
+    redirect_to root_url
   end
 end
