@@ -15,9 +15,14 @@
 one:
   post_id: 1
   user_id: 1
-  up: false
+  up: "true"
 
 two:
   post_id: 1
+  user_id: 2
+  up: "false"
+
+three: 
+  post_id: 3
   user_id: 1
   up: false

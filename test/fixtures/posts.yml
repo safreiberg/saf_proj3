@@ -8,18 +8,36 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  title      :string(255)
+#  upvotes    :integer
+#  downvotes  :integer
+#  rank       :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-first:
-  title: "First post!"
-  content: "trolol"
-  user_id: "1"
-  id: "1"
+one:
+  user_id: 1
+  content: "MyText"
+  title: "junk1"
+  id: 1
+  upvotes: 1
+  downvotes: 1
+  rank: 0
+
+two:
+  user_id: 1
+  content: "MyText2"
+  title: "junk2"
+  id: 2
+  upvotes: 0
+  downvotes: 0
+  rank: 0
   
-second: 
-  title: "Second post"
-  content: "got here second"
-  user_id: "2"
-  id: "2"
+three: 
+  user_id: 2
+  content: "stuff"
+  title: "junk3"
+  upvotes: 0
+  downvotes: 1
+  rank: "-1"
+  id: 3
