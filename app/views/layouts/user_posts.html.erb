@@ -8,7 +8,7 @@
   <div style="float:right; width:80%">
     <%= link_to post.title, :controller => "posts", :action => "show", :id => post.id %> <br />
     <%= "Posted by "%>
-    <%= link_to(comment.user.username.to_s, :controller => :user, :action => :show, :id => post.user_id) %> 
+    <%= link_to(post.user.username.to_s, :controller => :user, :action => :show, :id => post.user_id) %> 
     <%=" at " + post.created_at.strftime("%r: %b. %d, %Y").to_s %>
   </div>
 </div> <br />

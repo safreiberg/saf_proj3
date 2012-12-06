@@ -39,16 +39,40 @@ class UserTest < ActiveSupport::TestCase
   
   test "total karma" do
     u = users(:stephen)
-    # Stephen has initial total karma of -1.
-    assert_equal u.total_karma, -1
+    # Stephen has initial total karma of 1.
+    assert_equal u.total_karma, 1
     # Check effects of postvotes
     u.postvote(true)
     u.postvote(true)
     u.postvote(true)
-    assert_equal u.total_karma, -4
+    assert_equal u.total_karma, -2
     # Check effects of commentvotes
     u.commentvote(false)
     u.commentvote(false)
-    assert_equal u.total_karma, -2
+    assert_equal u.total_karma, 0 => 
+  end
+  
+  test 'good time to update' do
+    # This *currently* returns true.
+    assert users(:stephen).good_time_to_update
+  end
+  
+  test 'comment karma rank' do
+    u = users(:stephen)
+    assert_equal u.comment_karma_rank, 1
+    assert File.exist?('tmp/comment_karma.txt')
+  end
+  
+  test 'link karma rank' do
+    u = users(:stephen)
+    assert_equal u.link_karma_rank, 2
+    assert File.exist?('tmp/link_karma.txt')
+  end
+  
+  test 'total karma rank' do
+    u = users(:stephen)
+    # Get correct answer.
+    assert_equal u.total_karma_rank, 2
+    assert File.exist?('tmp/total_karma.txt')
   end
 end

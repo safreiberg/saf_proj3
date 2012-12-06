@@ -15,7 +15,11 @@ class UserController < ApplicationController
   # posts that this user has ever made, in formatted form.
   def update_posts
     u = User.find_by_id(params[:id])
-    @posts = u.posts
+    if !u.nil?
+      @posts = u.posts
+    else
+      @posts = []
+    end
     render :layout => "user_posts"
   end
   
@@ -24,7 +28,11 @@ class UserController < ApplicationController
   # comments that this user has ever made, in formatted form.
   def update_comments
     u = User.find_by_id(params[:id])
-    @comments = u.comments
+    if !u.nil?
+      @comments = u.comments
+    else
+      @comments = []
+    end
     render :layout => "user_comments"
   end
   
@@ -36,6 +44,7 @@ class UserController < ApplicationController
     render :layout => "user_stats"
   end
 
+  # Users are currently final.
   def edit
   end
   

@@ -1,3 +1,5 @@
+<% if @user.nil? %>
+<% else %>
 <tr>
   <th>Karma Type</th>
   <th>Amount</th>
@@ -31,3 +33,4 @@ th {
   padding-right: 25px;
 }
 </style>
+<% end %>
