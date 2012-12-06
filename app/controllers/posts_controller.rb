@@ -11,6 +11,7 @@ class PostsController < ApplicationController
 
   # Currently comments and posts are final.
   def edit
+    redirect_to :root
   end
 
   # Shows a list of all of the Posts.
@@ -18,10 +19,12 @@ class PostsController < ApplicationController
     @posts = Post.find(:all)
   end
 
+  # Create and New are not currently used.
   def create
+    redirect_to :root
   end
-
   def new
+    redirect_to :root
   end
   
   ## Upvote a post

@@ -3,16 +3,8 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
-  
-  
-  
   # Runs assert_difference with a number of conditions and varying difference
   # counts.
   #
@@ -20,6 +12,7 @@ class ActiveSupport::TestCase
   #
   #   assert_differences([['Model1.count', 2], ['Model2.count', 3]])
   #
+  # http://wholemeal.co.nz/blog/2011/04/06/assert-difference-with-multiple-count-values/
   def assert_differences(expression_array, message = nil, &block)
     b = block.send(:binding)
     before = expression_array.map { |expr| eval(expr[0], b) }
@@ -33,5 +26,24 @@ class ActiveSupport::TestCase
       error = "#{message}\n#{error}" if message
       assert_equal(before[i] + difference, eval(e, b), error)
     end
+  end
+  
+  # Sets the current_user by changing the necessary session variables.
+  def set_current_user(user)
+    if user.nil?
+      session[:authenticated] = false
+      session[:user_id] = 0
+    else
+      session[:authenticated] = true
+      session[:user_id] = user.id
+    end
+  end
+  
+  # Gets the current_user through the session variables.
+  def get_current_user
+    if session[:authenticated]
+      return User.find_by_id(session[:user_id])
+    end
+    return nil
   end
 end
