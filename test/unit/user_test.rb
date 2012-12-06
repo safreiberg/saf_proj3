@@ -49,7 +49,7 @@ class UserTest < ActiveSupport::TestCase
     # Check effects of commentvotes
     u.commentvote(false)
     u.commentvote(false)
-    assert_equal u.total_karma, 0 => 
+    assert_equal u.total_karma, 0
   end
   
   test 'good time to update' do
@@ -71,8 +71,8 @@ class UserTest < ActiveSupport::TestCase
   
   test 'total karma rank' do
     u = users(:stephen)
-    # Get correct answer.
     assert_equal u.total_karma_rank, 2
     assert File.exist?('tmp/total_karma.txt')
   end
+
 end

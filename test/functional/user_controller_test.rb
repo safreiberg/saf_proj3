@@ -77,4 +77,30 @@ class UserControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', 'Top Users'
   end
+  
+  test 'create' do
+    post :create, user: {email: "test@test.com", username: "test", password: "t", password_confirmation: "t"}
+    assert_redirected_to :root
+    assert_equal User.find_by_email("test@test.com"), get_current_user
+    assert_equal get_current_user.comment_karma, 0
+    assert_equal get_current_user.link_karma, 0
+    set_current_user nil
+    
+    # bad confirmation
+    post :create, user: {email: "test2@test.com", username: "test2", password: "t", password_confirmation: 'bad'}
+    assert_nil get_current_user
+    assert_redirected_to '/user/new'
+    
+    set_current_user nil
+    # already existing
+    post :create, user: {email: "saf@mit.edu", password: "a", password_confirmation: 'a'}
+    assert_redirected_to :root
+    assert_equal users(:stephen), get_current_user
+        
+    set_current_user nil
+    # already existing: bad confirmation
+    post :create, user: {email: "test@test.com", username: "test", password: "bad", password_confirmation: 'bad'}
+    assert_response :success
+    assert_equal get_current_user, nil
+  end
 end
