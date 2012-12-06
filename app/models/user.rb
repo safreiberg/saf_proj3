@@ -15,7 +15,8 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :admin, :email, :name, :password_digest, :password, :username, :password_confirmation, :link_karma, :comment_karma
+  attr_accessible :admin, :email, :name, :password_digest, :password
+  attr_accessible :username, :password_confirmation, :link_karma, :comment_karma
   has_secure_password
   
   has_many :comments
@@ -26,9 +27,11 @@ class User < ActiveRecord::Base
   validates :email, :uniqueness => true
   validates :username, :presence => true
   validates :username, :uniqueness => true
+  validates_numericality_of :link_karma
+  validates_numericality_of :comment_karma
   
   ## Processes the effects of a vote being posted to the author
-  ## of a comment.
+  ## of a comment, assuming this user is the author.
   def commentvote(up)
     if up
       self.comment_karma = self.comment_karma + 1
@@ -39,7 +42,7 @@ class User < ActiveRecord::Base
   end
   
   ## Processes the effects of a vote being posted to the author
-  ## of a post.
+  ## of a post, assuming this user is the author.
   def postvote(up)
     if up
       self.link_karma = self.link_karma + 1

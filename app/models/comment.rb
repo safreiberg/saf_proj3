@@ -20,6 +20,15 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   has_many :comment_votes
   
+  validates_presence_of :post_id
+  validates_presence_of :user_id
+  validates_presence_of :content
+  validates_numericality_of :post_id
+  validates_numericality_of :user_id
+  validates_numericality_of :upvotes
+  validates_numericality_of :downvotes
+  validates_numericality_of :rank
+  
   ## Processes the effects of a given user voting in a given way (up or down)
   ## on this Comment. Actions are:
   ##  1) Delete the previous vote, if present. This also undoes any appropriate

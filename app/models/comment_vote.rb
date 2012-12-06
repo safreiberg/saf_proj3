@@ -15,6 +15,13 @@ class CommentVote < ActiveRecord::Base
   belongs_to :comment
   belongs_to :user
   
+  # All fields must be present for this to be a valid Vote.
+  validates_presence_of :comment_id
+  validates :up, :inclusion => {:in => [true, false]}
+  validates_presence_of :user_id
+  validates_numericality_of :user_id
+  validates_numericality_of :comment_id
+  
   before_destroy :clean
   
   ## Removes the effects of the current CommentVote, as should 

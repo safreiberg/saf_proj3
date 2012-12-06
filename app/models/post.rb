@@ -19,6 +19,14 @@ class Post < ActiveRecord::Base
   has_many :post_votes
   has_many :comments
   
+  validates_presence_of :content
+  validates_presence_of :user_id
+  validates_numericality_of :user_id
+  validates_numericality_of :upvotes
+  validates_numericality_of :downvotes
+  validates_numericality_of :rank
+  validates_presence_of :title
+  
   ## Processes the effects of a given user voting in a given way (up or down)
   ## on this Post. Actions are:
   ##  1) Delete the previous vote, if present. This also undoes any appropriate

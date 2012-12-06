@@ -15,6 +15,11 @@ class PostVote < ActiveRecord::Base
   belongs_to :post
   belongs_to :user
   
+  # All fields must be present for this to be a valid Vote.
+  validates_presence_of :post_id
+  validates :up, :inclusion => {:in => [true, false]}
+  validates_presence_of :user_id
+  
   before_destroy :clean
   
   ## Removes the effects of the current PostVote, as should 
