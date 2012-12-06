@@ -17,21 +17,31 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  post_id: "1"
-  user_id: "1"
+  post_id: 1
+  user_id: 1
   content: "MyText"
   parent: nil
-  id: "1"
+  id: 1
   upvotes: 1
   downvotes: 1
   rank: 0
 
 two:
-  post_id: "1"
-  user_id: "1"
+  post_id: 1
+  user_id: 1
   content: "MyText2"
   parent: nil
-  id: "2"
+  id: 2
   upvotes: 0
   downvotes: 0
   rank: 0
+  
+three: 
+  post_id: 1
+  user_id: 2
+  content: "stuff"
+  parent: nil
+  upvotes: 0
+  downvotes: 1
+  rank: "-1"
+  id: 3

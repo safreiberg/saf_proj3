@@ -26,14 +26,14 @@ class CommentVote < ActiveRecord::Base
   ##     that this vote was aimed at. 
   def clean
     if self.up
-      self.user.comment_karma = self.user.comment_karma - 1
-      self.user.save
+      self.comment.user.comment_karma = self.comment.user.comment_karma - 1
+      self.comment.user.save
       self.comment.upvotes = self.comment.upvotes - 1
       self.comment.save
       self.comment.update_rank
     else
-      self.user.comment_karma = self.user.comment_karma + 1
-      self.user.save
+      self.comment.user.comment_karma = self.comment.user.comment_karma + 1
+      self.comment.user.save
       self.comment.downvotes = self.comment.downvotes - 1
       self.comment.save
       self.comment.update_rank
