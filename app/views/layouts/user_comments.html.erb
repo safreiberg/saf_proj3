@@ -15,7 +15,9 @@
   </div>
   <div style="float:right; width:80%">
     <%= comment.content %> <br />
-    <%= "Posted by " + comment.user.username.to_s + " at " + comment.created_at.strftime("%r: %b. %d, %Y").to_s %>
+    <%= "Posted by "%>
+    <%= link_to(comment.user.username.to_s, :controller => :user, :action => :show, :id => comment.user_id) %> 
+    <%=" at " + comment.created_at.strftime("%r: %b. %d, %Y").to_s %>
     <% if logged_in_admin? %>
     <%= link_to "Delete?", {:controller => "posts", :action => "delete_comment", id: comment.id}, :remote => true%>
     <% end %>
