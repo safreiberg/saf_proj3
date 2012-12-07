@@ -1,6 +1,6 @@
 <% @comments.each do |comment| %>
 
-<div style="width:60%; padding-bottom:1cm; background-color:#FFFFFF;">
+<div style="width:60%; padding-bottom:1cm; background-color:#FFFFFF;overflow:auto;">
   <div style="text-align:center;">
     <%= link_to "See original Post", {:controller => "posts", :action => "show", :id => comment.post_id } %>
   </div>

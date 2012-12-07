@@ -1,6 +1,6 @@
 <% @comments.each do |comment| %>
 
-<div style="width:60%; padding-bottom:1cm; background-color:#FFFFFF;">
+<div style="width:60%; padding-bottom:1cm; background-color:#FFFFFF; overflow:auto;">
   <div style="float:left; width:20%;">
     <% if current_user %>
     <%= link_to "up: " + comment.upvotes.to_s, {:controller => "posts", :action => "upcomment", :id => comment.id}, :remote => true %> <br />
@@ -10,12 +10,13 @@
     <%= "down: " + comment.downvotes.to_s %> <br />
     <% end %>
   </div>
-  <div style="float:right; width:80%">
+  <div style="float:right; width:80%; background-color: inherit;">
     <%= comment.content %> <br />
     <%= "Posted by " + comment.user.username.to_s + " at " + comment.created_at.strftime("%r: %b. %d, %Y").to_s %>
     <% if logged_in_admin? %>
     <%= link_to "Delete?", {:controller => "posts", :action => "delete_comment", id: comment.id}, :remote => true%>
     <% end %>
   </div>
-</div> <br />
+</div> 
+<br />
 <% end %>

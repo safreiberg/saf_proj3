@@ -1,6 +1,6 @@
 <% @posts.each do |post| %>
 
-<div style="width:60%; padding-bottom:1cm; background-color:#FFFFFF;">
+<div style="width:60%; padding-bottom:1cm; background-color:#FFFFFF;overflow:auto;">
   <div style="float:left; width:20%;">
     <% if current_user %>
     <%= link_to "up: " + post.upvotes.to_s, {:controller => "posts", :action => "uppost", :id => post.id}, :remote => true %> <br />
@@ -19,5 +19,6 @@
     <%= link_to "Delete?", {:controller => "posts", :action => "delete_post", id: post.id}, :remote => true%>
     <% end %>
   </div>
-</div> <br />
+</div> 
+<br />
 <% end %>
