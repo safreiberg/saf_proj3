@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_filter :require_login, only: [:uppost, :downpost, :upcomment, :downcomment, :add_comment, :add_post]
+  before_filter :require_admin, only: [:delete_post, :delete_comment]
   
   # Show the text of a Post. This also shows the Comments
   # on a post, as well as allows voting and adding comments
@@ -128,5 +129,32 @@ class PostsController < ApplicationController
       @comments = []
     end
     render :layout => "update_comments"
+  end
+  
+  # This method is called by an asynch ajax request
+  # from the index page when an administrator submits 
+  # a delete request.
+  #
+  # The delete action is blunt. It removes the original
+  # content, as well as any comments and votes associated
+  # with the original post or the comments in reply.
+  def delete_post
+    post = Post.find_by_id(params[:id])
+    if !post.nil?
+      post.destroy
+    end
+  end
+  
+  # This method is called by an asynch ajax request
+  # from the show page when an administrator submits
+  # a delete comment request.
+  #
+  # The delete action is blunt, and deletes any votes
+  # associated with the comment as well.
+  def delete_comment
+    comment = Comment.find_by_id(params[:id])
+    if !comment.nil?
+      comment.destroy
+    end
   end
 end

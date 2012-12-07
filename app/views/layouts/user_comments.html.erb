@@ -5,12 +5,20 @@
     <%= link_to "See original Post", {:controller => "posts", :action => "show", :id => comment.post_id } %>
   </div>
   <div style="float:left; width:20%;">
+    <% if current_user %>
     <%= link_to "up: " + comment.upvotes.to_s, {:controller => "posts", :action => "upcomment", :id => comment.id}, :remote => true %> <br />
     <%= link_to "down: " + comment.downvotes.to_s, {:controller => "posts", :action => "downcomment", :id => comment.id}, :remote => true %> <br />
+    <% else %>
+    <%= "up: " + comment.upvotes.to_s %> <br />
+    <%= "down: " + comment.downvotes.to_s %> <br />
+    <% end %>
   </div>
   <div style="float:right; width:80%">
     <%= comment.content %> <br />
     <%= "Posted by " + comment.user.username.to_s + " at " + comment.created_at.strftime("%r: %b. %d, %Y").to_s %>
+    <% if logged_in_admin? %>
+    <%= link_to "Delete?", {:controller => "posts", :action => "delete_comment", id: comment.id}, :remote => true%>
+    <% end %>
   </div>
 </div> <br />
 <% end %>

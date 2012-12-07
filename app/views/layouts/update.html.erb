@@ -2,14 +2,22 @@
 
 <div style="width:60%; padding-bottom:1cm; background-color:#FFFFFF;">
   <div style="float:left; width:20%;">
+    <% if current_user %>
     <%= link_to "up: " + post.upvotes.to_s, {:controller => "posts", :action => "uppost", :id => post.id}, :remote => true %> <br />
     <%= link_to "down: " + post.downvotes.to_s, {:controller => "posts", :action => "downpost", :id => post.id}, :remote => true %> <br />
+    <% else %>
+    <%= "up: " + post.upvotes.to_s %> <br />
+    <%= "down: " + post.downvotes.to_s %> <br />
+    <% end %>
   </div>
   <div style="float:right; width:80%">
     <%= link_to post.title, :controller => "posts", :action => "show", :id => post.id %> <br />
     <%= "Posted by "%>
     <%= link_to(post.user.username.to_s, :controller => :user, :action => :show, :id => post.user_id) %> 
     <%=" at " + post.created_at.strftime("%r: %b. %d, %Y").to_s %>
+    <% if logged_in_admin? %>
+    <%= link_to "Delete?", {:controller => "posts", :action => "delete_post", id: post.id}, :remote => true%>
+    <% end %>
   </div>
 </div> <br />
 <% end %>

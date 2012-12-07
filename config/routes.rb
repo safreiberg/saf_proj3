@@ -26,6 +26,12 @@ SafProj3::Application.routes.draw do
   get "/posts/add_post" => 'posts#add_post'
   post "/posts/add_post" => 'posts#add_post'
   
+  # Routes for deleting comments and posts.
+  post "/posts/delete_post/:id" => "posts#delete_post"
+  get "/posts/delete_post/:id" => "posts#delete_post"
+  post "/posts/delete_comment/:id" => "posts#delete_comment"  
+  get "/posts/delete_comment/:id" => "posts#delete_comment"  
+  
   # Routes for updating comment views.
   get "/posts/update_comments" => "posts#update_comments"
   post "/posts/update_comments" => "posts#update_comments"

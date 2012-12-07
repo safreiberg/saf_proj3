@@ -16,8 +16,8 @@
 class Post < ActiveRecord::Base
   attr_accessible :content, :user_id, :title, :upvotes, :downvotes, :rank
   belongs_to :user
-  has_many :post_votes
-  has_many :comments
+  has_many :post_votes, dependent: :destroy
+  has_many :comments, dependent: :destroy
   
   validates_presence_of :content
   validates_presence_of :user_id

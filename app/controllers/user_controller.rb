@@ -20,7 +20,7 @@ class UserController < ApplicationController
     else
       @posts = []
     end
-    render :layout => "user_posts"
+    render :layout => "update"
   end
   
   # Called by an asynchronous ajax request on show.html.erb

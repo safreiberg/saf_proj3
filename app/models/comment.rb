@@ -18,7 +18,7 @@ class Comment < ActiveRecord::Base
   attr_accessible :content, :parent, :post_id, :user_id, :upvotes, :downvotes, :rank
   belongs_to :post
   belongs_to :user
-  has_many :comment_votes
+  has_many :comment_votes, dependent: :destroy
   
   validates_presence_of :post_id
   validates_presence_of :user_id

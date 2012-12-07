@@ -324,4 +324,66 @@ class PostsControllerTest < ActionController::TestCase
     end
   end
   
+  # Test the delete functionality for posts
+  test "delete posts" do    
+    # Nothing should happen without current user
+    assert_difference('Post.count',0) do
+      get :delete_post, id: posts(:one)
+      assert_redirected_to :root
+      
+      post :delete_post, id: posts(:one)
+      assert_redirected_to :root
+    end
+    
+    # Nothing should happen without admin
+    set_current_user(users(:stephen))
+    assert_difference('Post.count',0) do
+      get :delete_post, id: posts(:one)
+      assert_redirected_to :root
+      
+      post :delete_post, id: posts(:one)
+      assert_redirected_to :root
+    end
+    
+    # Admin can delete posts
+    set_current_user(users(:admin))
+    assert_difference('Post.count',-1) do
+      id = posts(:one).id
+      get :delete_post, id: posts(:one)
+      assert_response :success
+      assert_equal Comment.find_all_by_post_id(id), []
+      assert_equal PostVote.find_all_by_post_id(id), []
+    end 
+  end
+  
+  # Test the delete functionality for comments
+  test "delete comments" do
+    # Nothing should happen without current user
+    assert_difference('Comment.count',0) do
+      get :delete_comment, id: comments(:one)
+      assert_redirected_to :root
+      
+      post :delete_comment, id: comments(:one)
+      assert_redirected_to :root
+    end
+    
+    # Nothing should happen without admin
+    set_current_user(users(:stephen))
+    assert_difference('Comment.count',0) do
+      get :delete_comment, id: comments(:one)
+      assert_redirected_to :root
+      
+      post :delete_comment, id: comments(:one)
+      assert_redirected_to :root
+    end
+    
+    # Admin can delete comments
+    set_current_user(users(:admin))
+    assert_difference('Comment.count',-1) do
+      id = comments(:one).id
+      get :delete_comment, id: comments(:one)
+      assert_response :success
+      assert_equal CommentVote.find_all_by_comment_id(id), []
+    end 
+  end
 end
