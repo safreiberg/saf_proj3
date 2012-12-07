@@ -67,6 +67,7 @@ class UserController < ApplicationController
   # in.
   def create
     @user = User.new(params[:user])
+    @user.admin = false
     @user.link_karma = 0
     @user.comment_karma = 0
     if @user.save
