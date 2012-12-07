@@ -1,4 +1,5 @@
 class UserController < ApplicationController
+  before_filter :require_admin, only: :set_admin
   # Provides the object as a template for creating a 
   # new user.
   def new
@@ -8,6 +9,16 @@ class UserController < ApplicationController
   # Shows information about the requested  user.
   def show
     @user = User.find_by_id(params[:id])
+  end
+  
+  # Only an administrator is allowed to set the admin field on another
+  # user. 
+  def set_admin
+    user = User.find_by_id(params[:id])
+    if !user.nil?
+      user.set_admin(params[:bool])
+    end
+    redirect_to '/user/'+params[:id].to_s
   end
   
   # Called by an asynchronous ajax request on show.html.erb

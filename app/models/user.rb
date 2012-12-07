@@ -170,4 +170,10 @@ class User < ActiveRecord::Base
     true
   end
   
+  # Sets the admin field to the given boolean value.
+  def set_admin(bool)
+    self.admin = bool
+    self.save!
+  end
+  
 end

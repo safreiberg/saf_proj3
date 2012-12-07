@@ -74,5 +74,15 @@ class UserTest < ActiveSupport::TestCase
     assert_equal u.total_karma_rank, 2
     assert File.exist?('tmp/total_karma.txt')
   end
+  
+  test 'set admin' do
+    u = users(:stephen)
+    assert_equal u.admin, false
+    u.set_admin(true)
+    assert_equal u.admin, true
+    
+    u.set_admin(false)
+    assert_equal u.admin, false
+  end
 
 end

@@ -63,6 +63,7 @@ SafProj3::Application.routes.draw do
   
   # Routes for viewing user resources.
   resources :user
+  get '/user/set_admin/:id/:bool' => 'user#set_admin', as: :admin_path
   get '/user/show' => 'user#show'
   post '/user/show' => 'user#show'
   get '/user/edit' => 'user#edit'

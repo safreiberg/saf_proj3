@@ -103,4 +103,23 @@ class UserControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal get_current_user, nil
   end
+  
+  test 'set admin' do
+    # Not admin
+    get :set_admin, {id: users(:stephen).id, bool: "true"}
+    assert_redirected_to :root
+    users(:stephen).reload
+    assert_equal users(:stephen).admin, false
+    
+    set_current_user(users(:admin))
+    get :set_admin, {id: users(:stephen).id, bool: "true"}
+    assert_redirected_to '/user/' + users(:stephen).id.to_s
+    users(:stephen).reload
+    assert_equal users(:stephen).admin, true
+    
+    get :set_admin, {id: users(:stephen).id, bool: "false"}
+    assert_redirected_to '/user/' + users(:stephen).id.to_s
+    users(:stephen).reload
+    assert_equal users(:stephen).admin, false
+  end
 end
